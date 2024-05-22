@@ -1,0 +1,24 @@
+
+
+//Creation dependency
+
+npm create vite@latest
+
+npm i 
+
+//Mui dependency
+
+npm install @mui/material @emotion/react @emotion/styled
+
+npm install @mui/material @mui/styled-engine-sc styled-components
+
+npm install @mui/icons-material
+
+
+//UseForm
+
+npm install react-hook-form
+
+npm install @hookform/resolvers
+
+npm i zod
