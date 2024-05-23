@@ -1,0 +1,14 @@
+//Express dependency
+
+npm i express
+
+//Dot env Dependency 
+
+npm i dotenv
+
+//DB dependency
+
+npm i mongoose
+
+npm install --save express-async-handler
+
