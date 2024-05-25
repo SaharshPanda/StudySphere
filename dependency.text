@@ -12,3 +12,6 @@ npm i mongoose
 
 npm install --save express-async-handler
 
+//JWT dependency
+
+npm i jsonwebtoken
