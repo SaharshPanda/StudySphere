@@ -5,6 +5,8 @@ import express from 'express';   //ES Module
 import dotenv from 'dotenv';
 import connectDB from './config/dbConnection.js'; 
 import userRouter from './routes/userRouter.js';
+import studentDataRouter from './routes/studentDataRouter.js';
+import coachDataRouter from './routes/coachDataRouter.js';
 
 // Load environment variables
 dotenv.config();
@@ -28,6 +30,10 @@ app.listen(port,()=>{
 
 
 app.use("/user", userRouter)
+
+app.use("/studentData", studentDataRouter )
+
+app.use("/coachdata",coachDataRouter)
 
 export default app;
 
