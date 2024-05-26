@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { NavLink, useNavigate } from "react-router-dom";
 
 
 const Login = () => {
@@ -14,12 +15,12 @@ const Login = () => {
 
     const [loginData, setLoginData] = useState({ email : "", password : ""})
     const {register, handleSubmit,setErrors,formState : {errors,isSubmitting}} = useForm({ resolver: zodResolver(schema)})
-
+   const navigate = useNavigate()
     const onSubmit = async (data) => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
         console.log(data);    }
   return (
-    <>
+    <Stack direction={"column"} alignItems={"center"} justifyContent={"center"} sx={{width : "100%", height : "100vh"}}>
 <Typography>Login</Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack direction={"column"} sx={{border : '2px solid black', padding : "20px"}} spacing={2}>
@@ -43,9 +44,15 @@ const Login = () => {
             {errors.password && <FormHelperText sx={{color:"red"}}>{errors.password.message}</FormHelperText>}
           </Stack>
           <Button type="submit" variant="contained" disabled={isSubmitting}>{isSubmitting ? "Loading" : "Submit"}</Button>
+          <Stack direction="row" spacing={"4px"} alignItems="center" justifyContent={'center'}>
+              <Typography variant="caption">New User?</Typography>
+              <Typography variant="caption" color="blue">
+                <NavLink to="/register">Register</NavLink>
+              </Typography>
+            </Stack>
         </Stack>
       </form>
-    </>
+    </Stack>
   );
 };
 

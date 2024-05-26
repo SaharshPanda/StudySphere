@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { NavLink } from "react-router-dom";
 
 const Register = () => {
   const schema = z.object({
@@ -26,7 +27,7 @@ const Register = () => {
     console.log(data);
   };
   return (
-    <>
+    <Stack direction={"column"} alignItems={"center"} justifyContent={"center"} sx={{width : "100%", height : "100vh"}}>
       <Typography>Register</Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack direction={"column"} sx={{ border: "2px solid black", padding: "20px" }} spacing={2}>
@@ -93,9 +94,15 @@ const Register = () => {
           <Button type="submit" variant="contained" disabled={isSubmitting}>
             {isSubmitting ? "Loading" : "Submit"}
           </Button>
+          <Stack direction="row" spacing={"4px"} alignItems="center" justifyContent={'center'}>
+              <Typography variant="caption">Already a User?</Typography>
+              <Typography variant="caption" color="blue">
+                <NavLink to="/">Login</NavLink>
+              </Typography>
+            </Stack>
         </Stack>
       </form>
-    </>
+    </Stack>
   );
 };
 

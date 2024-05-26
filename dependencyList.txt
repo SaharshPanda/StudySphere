@@ -22,3 +22,7 @@ npm install react-hook-form
 npm install @hookform/resolvers
 
 npm i zod
+
+//Router dependency
+
+npm i react-router-dom 

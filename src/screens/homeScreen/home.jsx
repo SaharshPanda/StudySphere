@@ -19,6 +19,15 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import CastForEducationIcon from '@mui/icons-material/CastForEducation';
+import PageNotFound from '../pageNotFoundScreen/pageNotFound';
+import { Route, Routes } from 'react-router-dom';
+import SideNav from './sideNav';
+import HomeComponent from './homeComponent';
+import Catalog from '../catalogScreen/catalog';
+import Notes from '../notesScreen/notes';
+import Achievement from '../achievmentScreen/achievement';
+import Mentor from '../mentorScreen/mentor';
+import { Stack } from '@mui/material';
 
 const Home = () => {
 
@@ -89,7 +98,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-
 const theme = useTheme();
 const [open, setOpen] = React.useState(false);
 
@@ -102,7 +110,18 @@ const handleDrawerClose = () => {
 };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Stack  direction={"column"} sx={{
+      backgroundColor: '#42f5ef',
+      p: 0,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center', // Align items vertically center
+      m: 0, // Ensure no margin
+      width: "100%",
+      height : '100vh',
+      // alignContent : 'flex-start',
+      
+    }} justifyContent={"flex-start"} alignItems={"flex=start"}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
@@ -119,10 +138,14 @@ const handleDrawerClose = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
+            StudySphere
           </Typography>
         </Toolbar>
       </AppBar>
+
+<Stack direction={"row"} alignItems={"flex=start"} spacing={0} sx={{width : '100%', height :"100vh"}}>
+
+
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
@@ -131,27 +154,8 @@ const handleDrawerClose = () => {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
+          {["home", 'browseCourse', 'notes', 'mentor',"achievements"].map((value1) => (
+            <SideNav value={value1} open={open}/>
           ))}
         </List>
         <Divider />
@@ -180,37 +184,24 @@ const handleDrawerClose = () => {
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, p:0, m : 0,width : "100%"}}>
         <DrawerHeader />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
-          enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-          imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
-          Convallis convallis tellus id interdum velit laoreet id donec ultrices.
-          Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra
-          nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum
-          leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis
-          feugiat vivamus at augue. At augue eget arcu dictum varius duis at
-          consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-          sapien faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
-          eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
-          neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
-          tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis
-          sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
-          tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
-          gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-          et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
-          tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
+
+        <Routes>
+          <Route path="*" element={<PageNotFound/>} />
+          <Route index element={<HomeComponent/>} />
+          <Route path="/catalog" element={<Catalog/>} />
+          <Route path="/notes" element={<Notes/>} />
+          <Route path="/mentor" element={<Mentor/>} />
+          <Route path="/achievements" element={<Achievement/>} />
+
+        </Routes>
+
+    
+        
       </Box>
-    </Box>
+      </Stack>
+    </Stack>
   )
 }
 
