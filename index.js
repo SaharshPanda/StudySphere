@@ -7,6 +7,7 @@ import connectDB from './config/dbConnection.js';
 import userRouter from './routes/userRouter.js';
 import studentDataRouter from './routes/studentDataRouter.js';
 import coachDataRouter from './routes/coachDataRouter.js';
+import cors from 'cors';
 
 // Load environment variables
 dotenv.config();
@@ -19,6 +20,9 @@ const port = process.env.PORT || 5000;
 
 // Middleware to parse JSON requests
 app.use(express.json());
+
+//To removr cors error
+app.use(cors());
 
 
 connectDB()

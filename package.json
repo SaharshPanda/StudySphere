@@ -39,6 +39,7 @@
     "color-name": "^1.1.3",
     "concat-map": "^0.0.1",
     "convert-source-map": "^2.0.0",
+    "cors": "^2.8.5",
     "cosmiconfig": "^7.1.0",
     "cross-spawn": "^7.0.3",
     "css-color-keywords": "^1.0.0",
