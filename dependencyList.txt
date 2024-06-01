@@ -26,3 +26,7 @@ npm i zod
 //Router dependency
 
 npm i react-router-dom 
+
+//Axios dependency
+
+npm i axios

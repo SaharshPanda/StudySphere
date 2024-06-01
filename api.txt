@@ -1,0 +1,44 @@
+1- UserRouter API :
+
+Register :
+
+Endpoint : http://localhost:5001/user/register
+Type : POST,
+Payload : {
+  "fullname": "Saharsh",
+  "email": "ronakpanda67@gmail.com",
+  "password": "Ronak",
+  "role": "student"
+}
+
+login :
+
+Endpoint : http://localhost:5001/user/login
+Type : POST,
+Payload : {
+  "email": "ronakpanda67@gmail.com",
+  "password": "Ronak",
+}
+
+Endpoint : http://localhost:5001/user/roleAuthorization
+Type : POST,
+Payload : {
+"token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZWdpc3RlcmVkVXNlciI6eyJfaWQiOiI2NjUwYzhjOWY5OGRjMTAzMWEwNDg2MGUiLCJmdWxsbmFtZSI6IlNhaGFyc2giLCJlbWFpbCI6InJvbmFrcGFuZGE2N0BnbWFpbC5jb20iLCJwYXNzd29yZCI6IlJvbmFrIiwiZW5hYmxlZCI6InRydWUiLCJyb2xlIjoic3R1ZGVudCIsImNyZWF0ZWRBdCI6IjIwMjQtMDUtMjRUMTc6MDU6MTMuMTk0WiIsInVwZGF0ZWRBdCI6IjIwMjQtMDUtMjRUMTc6MDU6MTMuMTk0WiIsIl9fdiI6MH0sImlhdCI6MTcxNjc0NTA1MiwiZXhwIjoxNzE2NzQ2ODUyfQ.ffgL4yhpnZywjuyqutAUn_452jDyCjMhCmDmCrWxJV0"
+}
+
+2- studentDataRouter API :
+
+Endpoint : http://localhost:5001/studentData/generalData/:emailId
+Type : GET
+
+Endpoint : http://localhost:5001/studentData/notesData/:emailId
+Type : GET
+
+Endpoint : http://localhost:5001/studentData/achievementData/:emailId
+Type : GET
+
+
+3- coachDataRouter API :
+
+Endpoint : http://localhost:5001/coachdata/courseData/:emailId
+Type : GET

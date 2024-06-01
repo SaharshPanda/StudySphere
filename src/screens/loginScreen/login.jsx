@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { NavLink, useNavigate } from "react-router-dom";
+import doAxios, { baseUrl } from "../../Api/api";
+import AlertDialog from "../../components/alertDialog";
 
 
 const Login = () => {
@@ -12,13 +14,31 @@ const Login = () => {
         email: z.string().email(),
         password: z.string().min(6),
       });
-
+    const [isSubmitting, setIsSubmitting] = useState(false)
     const [loginData, setLoginData] = useState({ email : "", password : ""})
-    const {register, handleSubmit,setErrors,formState : {errors,isSubmitting}} = useForm({ resolver: zodResolver(schema)})
+    const {register, handleSubmit,setErrors,formState : {errors}} = useForm({ resolver: zodResolver(schema)})
    const navigate = useNavigate()
-    const onSubmit = async (data) => {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        console.log(data);    }
+   const [alert, setAlert] = useState({open : false, message : "", severity : ""})
+    const onSubmit = (data) => {
+      setAlert((prev)=>({...prev,open : false, message : "", severity : "" }))
+
+      setIsSubmitting(true)
+       const payload = loginData
+       const success = (data) => {
+        setAlert((prev)=>({...prev,open : true, message : data?.data.message, severity : "success" }))
+         setIsSubmitting(false)
+         setTimeout(()=>{
+           navigate("/home")
+
+         },[1000])
+        }
+         const error = (data) => {
+          setAlert((prev)=>({...prev, open : true,severity : "error", message : data?.response?.data.message }))
+          setIsSubmitting(false)
+
+                }
+          doAxios(baseUrl + "user/login" , "post", payload, success, error)
+       }
   return (
     <Stack direction={"column"} alignItems={"center"} justifyContent={"center"} sx={{width : "100%", height : "100vh"}}>
 <Typography>Login</Typography>
@@ -52,6 +72,8 @@ const Login = () => {
             </Stack>
         </Stack>
       </form>
+       <AlertDialog state={alert?.open} severity={alert?.severity} message={alert?.message} />
+
     </Stack>
   );
 };

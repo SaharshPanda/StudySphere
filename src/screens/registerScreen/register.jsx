@@ -3,28 +3,52 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import AlertDialog from "../../components/alertDialog";
+import doAxios, { baseUrl } from "../../Api/api";
 
 const Register = () => {
   const schema = z.object({
-    fullName: z.string().nonempty("Full name is required"),
+    fullname: z.string().nonempty("Full name is required"),
     email: z.string().email(),
     password: z.string().min(6),
     cnfmPassword: z.string().min(6),
     role : z.string()
   });
-
-  const [registerData, setRegisterData] = useState({ fullName: "", email: "", password: "", cnfmPassword: "", role : "" });
+  const navigate = useNavigate()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [alert, setAlert] = useState({open : false, message : "", severity : ""})
+  const [registerData, setRegisterData] = useState({ fullname: "", email: "", password: "", cnfmPassword: "", role : "student" });
   const {
     register,
     handleSubmit,
     setErrors,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({ resolver: zodResolver(schema) });
 
   const onSubmit = async (data) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(data);
+    if(registerData?.password != registerData.cnfmPassword){
+      setAlert((prev)=>({...prev, open : true,severity : "error", message : "Different passwords in both field" }))
+
+    }else {
+      setAlert((prev)=>({...prev,open : false, message : "", severity : "" }))
+      setIsSubmitting(true)
+      const payload = registerData
+      const success = (data) => {
+       setAlert((prev)=>({...prev,open : true, message : data?.data.message, severity : "success" }))
+        setIsSubmitting(false)
+        setTimeout(()=>{
+          navigate("/")
+  
+        },[1000])
+       }
+        const error = (data) => {
+         setAlert((prev)=>({...prev, open : true,severity : "error", message : data?.response?.data.message }))
+         setIsSubmitting(false)
+  
+               }
+         doAxios(baseUrl + "user/register" , "post", payload, success, error)
+    }
   };
   return (
     <Stack direction={"column"} alignItems={"center"} justifyContent={"center"} sx={{width : "100%", height : "100vh"}}>
@@ -51,8 +75,8 @@ const Register = () => {
             
           <Stack direction={"column"} spacing={0} alignItems={"flex-start"}>
             <Typography>Full Name / Org Name</Typography>
-            <TextField {...register("fullName")} type="text" size="small" onChange={(e) => setRegisterData((prev) => ({ ...prev, fullName: e.target.value }))} sx={{width:'100%'}}/>
-            {errors.fullName && <FormHelperText sx={{ color: "red" }}>{errors.fullName.message}</FormHelperText>}
+            <TextField {...register("fullname")} type="text" size="small" onChange={(e) => setRegisterData((prev) => ({ ...prev, fullname: e.target.value }))} sx={{width:'100%'}}/>
+            {errors.fullname && <FormHelperText sx={{ color: "red" }}>{errors.fullname.message}</FormHelperText>}
           </Stack>
           <Stack direction={"column"} spacing={0} alignItems={"flex-start"}>
             <Typography>Email</Typography>
@@ -102,6 +126,7 @@ const Register = () => {
             </Stack>
         </Stack>
       </form>
+      <AlertDialog state={alert?.open} severity={alert?.severity} message={alert?.message} />
     </Stack>
   );
 };
